@@ -49,9 +49,12 @@
             background-color: #1d4ed8;
         }
         .login-container {
-            display: none; /* Initially hidden; shown after clicking Login */
+            display: none;
             margin: 20px;
             text-align: center;
+        }
+        .hidden {
+            display: none;
         }
         footer {
             background-color: #1e3a8a;
@@ -73,6 +76,7 @@
     <h2>Login to Play</h2>
     <input type="text" id="username" placeholder="Enter your username" required>
     <button onclick="login()">Login</button>
+    <p id="loginMessage" class="hidden"></p>
 </div>
 
 <main>
@@ -117,25 +121,43 @@
 </footer>
 
 <script>
+    let isLoggedIn = false;
+    let currentUser = "";
+
     function showLogin() {
         document.getElementById('loginContainer').style.display = 'block';
     }
 
     function login() {
-        const username = document.getElementById('username').value;
+        const username = document.getElementById('username').value.trim();
+        const loginMessage = document.getElementById('loginMessage');
+
         if (username) {
-            alert('Welcome, ' + username + '!');
+            isLoggedIn = true; // Simulating login
+            currentUser = username;
+            loginMessage.textContent = `Welcome, ${currentUser}!`;
+            loginMessage.classList.remove('hidden');
             document.getElementById('loginContainer').style.display = 'none';
-            // You can now show the game buttons because the user is logged in.
-            document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+            enableGameButtons();
         } else {
-            alert('Please enter a username.');
+            loginMessage.textContent = 'Please enter a valid username.';
+            loginMessage.classList.remove('hidden');
         }
     }
 
+    function enableGameButtons() {
+        document.querySelectorAll('.game-card button').forEach(btn => {
+            btn.disabled = false;
+        });
+    }
+
     function playGame(gameName) {
-        alert('Loading ' + gameName + '...');
-        // Here you would redirect to the actual game or implement game loading logic
+        if (isLoggedIn) {
+            alert(`Loading ${gameName} for ${currentUser}...`);
+            // Here you could redirect to the actual game or implement game loading logic
+        } else {
+            alert('You must be logged in to play games. Please log in.');
+        }
     }
 </script>
 </body>
