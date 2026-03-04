@@ -4,59 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud Gaming Showcase</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f3f4f6;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .game-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 15px;
+            padding: 15px;
+            width: 300px;
+            text-align: center;
+        }
+        .game-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        button {
+            background-color: #3b82f6;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        .login-container {
+            display: none; /* Initially hidden; shown after clicking Login */
+            margin: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 15px;
         }
     </style>
 </head>
-<body class="font-sans">
+<body>
 
-    <header class="bg-blue-600 p-4 text-white">
-        <h1 class="text-3xl text-center">Cloud Gaming Showcase</h1>
-        <p class="text-center">Play your favorite games anywhere!</p>
-    </header>
+<header>
+    <h1>Cloud Gaming Showcase</h1>
+    <p>Play your favorite games anywhere!</p>
+    <button onclick="showLogin()">Login</button>
+</header>
 
-    <main class="container mx-auto mt-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- Game Card -->
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold">Minecraft</h2>
-                <img src="https://example.com/minecraft.jpg" alt="Minecraft" class="rounded mt-2">
-                <p class="mt-2">Explore, build, and survive in this blocky adventure game!</p>
-            </div>
+<div class="login-container" id="loginContainer">
+    <h2>Login to Play</h2>
+    <input type="text" id="username" placeholder="Enter your username" required>
+    <button onclick="login()">Login</button>
+</div>
 
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold">GTA 5</h2>
-                <img src="https://example.com/gta5.jpg" alt="GTA 5" class="rounded mt-2">
-                <p class="mt-2">Experience the sprawling world of Los Santos, with endless activities.</p>
-            </div>
+<main>
+    <div class="game-card">
+        <h2>Minecraft</h2>
+        <img src="https://example.com/minecraft.jpg" alt="Minecraft">
+        <p>Explore, build, and survive!</p>
+        <button onclick="playGame('Minecraft')">Play</button>
+    </div>
 
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold">Red Dead Redemption 2</h2>
-                <img src="https://example.com/reddead2.jpg" alt="Red Dead Redemption 2" class="rounded mt-2">
-                <p class="mt-2">Embark on an epic journey in this stunning open-world game.</p>
-            </div>
+    <div class="game-card">
+        <h2>GTA 5</h2>
+        <img src="https://example.com/gta5.jpg" alt="GTA 5">
+        <p>Experience the sprawling world of Los Santos!</p>
+        <button onclick="playGame('GTA 5')">Play</button>
+    </div>
 
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold">Poppy Playtime</h2>
-                <img src="https://example.com/poppyplaytime.jpg" alt="Poppy Playtime" class="rounded mt-2">
-                <p class="mt-2">Survive and uncover secrets in this horror puzzle adventure game!</p>
-            </div>
+    <div class="game-card">
+        <h2>Red Dead Redemption 2</h2>
+        <img src="https://example.com/reddead2.jpg" alt="Red Dead Redemption 2">
+        <p>Embark on an epic journey!</p>
+        <button onclick="playGame('Red Dead Redemption 2')">Play</button>
+    </div>
 
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold">Fortnite</h2>
-                <img src="https://example.com/fortnite.jpg" alt="Fortnite" class="rounded mt-2">
-                <p class="mt-2">Join the battle in this popular free-to-play battle royale game!</p>
-            </div>
+    <div class="game-card">
+        <h2>Poppy Playtime</h2>
+        <img src="https://example.com/poppyplaytime.jpg" alt="Poppy Playtime">
+        <p>Survive and uncover secrets!</p>
+        <button onclick="playGame('Poppy Playtime')">Play Chapter 5</button>
+    </div>
 
-        </div>
-    </main>
+    <div class="game-card">
+        <h2>Fortnite</h2>
+        <img src="https://example.com/fortnite.jpg" alt="Fortnite">
+        <p>Join the battle and build!</p>
+        <button onclick="playGame('Fortnite')">Play</button>
+    </div>
+</main>
 
-    <footer class="bg-gray-800 text-white py-4 mt-8">
-        <p class="text-center">© 2026 Cloud Gaming Showcase. All rights reserved.</p>
-    </footer>
+<footer>
+    <p>© 2026 Cloud Gaming Showcase. All rights reserved.</p>
+</footer>
 
+<script>
+    function showLogin() {
+        document.getElementById('loginContainer').style.display = 'block';
+    }
+
+    function login() {
+        const username = document.getElementById('username').value;
+        if (username) {
+            alert('Welcome, ' + username + '!');
+            document.getElementById('loginContainer').style.display = 'none';
+            // You can now show the game buttons because the user is logged in.
+            document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+        } else {
+            alert('Please enter a username.');
+        }
+    }
+
+    function playGame(gameName) {
+        alert('Loading ' + gameName + '...');
+        // Here you would redirect to the actual game or implement game loading logic
+    }
+</script>
 </body>
 </html>
